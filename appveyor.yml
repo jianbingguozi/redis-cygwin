@@ -1,0 +1,22 @@
+branches:
+  only:
+    - master
+
+environment:
+    global:
+        CYG_ROOT: C:\cygwin64
+        CYG_BASH: C:\cygwin64\bin\bash
+        
+init:
+  - git config --global core.autocrlf input
+
+build_script:
+  - 'echo Building...'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER; exec 0</dev/null; wget http://download.redis.io/releases/redis-3.2.1.tar.gz"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER; exec 0</dev/null; tar xzf redis-3.2.1.tar.gz"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER; exec 0</dev/null; cd redis-3.2.1"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER; exec 0</dev/null; make"'
+
+platform: x64
+
+test: false
